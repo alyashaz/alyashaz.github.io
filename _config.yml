@@ -1,0 +1,49 @@
+title: My personal blog - Zyad Alyashae
+email: zyadalyashae@gmail.com
+description: > # this means to ignore newlines until "baseurl:"
+  Write an awesome description for your new site here. You can edit this
+  line in _config.yml. It will appear in your document head meta (for
+  Google search results) and in your feed.xml site description.
+permalink: ':title/'
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "alyashaz.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+
+# Author settings
+author: Zyad Alyashae # add your name
+author-pic: headshot.jpg
+about-author: Hey! I am Zyad Alyashae, but you may remember me as Zee. I’m a Back-end Software Engineer, occasional photographer, and an avid Soccer fan (Football for those who are outside of NA).
+
+# Contact links
+#email: # Add your Email address
+#phone: # Add your Phone number
+website: alyashaz.github.io # Add your website, do not add http://
+linkedin: https://www.linkedin.com/in/zyad-alyashae-b243b690/ # Add your Linkedin handle
+#github: # Add your Github handle
+#twitter: # Add your Twitter handle
+#facebook: # Add your Facebook handle
+instagram:  breathtaking.voyage # Add your Instagram handle
+#pinterest: # Add your Pinterest handle
+
+# Newsletter
+#mailchimp: # Add your MailChimp form identifier.
+
+# Disqus
+#discus_identifier: # Add your discus identifier
+
+# Tracker
+analytics: # Google Analytics
+
+# Paginate
+paginate: 6
+paginate_path: /page:num/
+
+# Build settings
+markdown: kramdown
+
+plugins:
+  - jekyll-paginate
+  - jekyll-feed
+  - jekyll-sitemap
+
+include: [_pages]
+exclude: ["node_modules", "gulpfile.js", "package.json", "yarn.lock", "package-lock.json", "assets/css/sass/"]
