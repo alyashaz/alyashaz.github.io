@@ -30,8 +30,8 @@ instagram:  breathtaking.voyage # Add your Instagram handle
 # Disqus
 #discus_identifier: # Add your discus identifier
 
-# Tracker
-analytics: # Google Analytics
+# Google Analytics Tracker
+analytics: UA-165344084-1
 
 # Paginate
 paginate: 6
