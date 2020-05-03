@@ -5,30 +5,30 @@ description: > # this means to ignore newlines until "baseurl:"
   line in _config.yml. It will appear in your document head meta (for
   Google search results) and in your feed.xml site description.
 permalink: ':title/'
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "alyashaz.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: "" # the subpath of the site, e.g. /blog
+url: "alyashaz.github.io" # the base hostname & protocol for the site, e.g. http://example.com
 
 # Author settings
 author: Zyad Alyashae # add your name
 author-pic: headshot.jpg
-about-author: Hey! I am Zyad Alyashae, but you may remember me as Zee. I’m a Back-end Software Engineer, occasional photographer, and an avid Soccer fan (Football for those who are outside of NA).
+about-author: Hey! I am Zyad Alyashae, but you may remember me as Zee. I’m a Back-End Software Engineer, occasional photographer, and an avid Soccer fan (Football for those who are outside of NA).
 
 # Contact links
-#email: # Add your Email address
-#phone: # Add your Phone number
-website: alyashaz.github.io # Add your website, do not add http://
-linkedin: https://www.linkedin.com/in/zyad-alyashae-b243b690/ # Add your Linkedin handle
-#github: # Add your Github handle
-#twitter: # Add your Twitter handle
-#facebook: # Add your Facebook handle
-instagram:  breathtaking.voyage # Add your Instagram handle
-#pinterest: # Add your Pinterest handle
+#email: # Email address
+#phone: # Phone number
+website: alyashaz.github.io # Do not add http://
+linkedin: zyad-alyashae-b243b690 # Linkedin handle
+github: alyashaz # Github handle
+#twitter: # Twitter handle
+#facebook: # Facebook handle
+instagram:  breathtaking.voyage # Instagram handle
+#pinterest: # Pinterest handle
 
 # Newsletter
-#mailchimp: # Add your MailChimp form identifier.
+#mailchimp: # MailChimp form identifier.
 
 # Disqus
-#discus_identifier: # Add your discus identifier
+#discus_identifier: # discus identifier
 
 # Google Analytics Tracker
 analytics: UA-165344084-1
