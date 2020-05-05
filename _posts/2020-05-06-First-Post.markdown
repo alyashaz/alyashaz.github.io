@@ -12,6 +12,7 @@ Welcome aboard! I've been working on this blog for some time and I'm finally gla
 I've worked in multiple industries varying from small, medium, and large corporations. So why have I created a blog? I'm at a stage in my early career (I've been working for a few years) where I've seen enough "huh?" and "wow" moments that I've reflected heavily on.
 
 Let's go back to my university days. I went to school for Business Administration & Computer Science and was the only student to graduate in this double major (with internship) program, proof below.
+
 <a href="{{site.baseurl}}/assets/img/itinerary.JPG">
 <img style="margin-left: auto;margin-right: auto; display: block;" src="{{site.baseurl}}/assets/img/itinerary.JPG">
 </a>
