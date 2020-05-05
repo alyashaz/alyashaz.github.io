@@ -3,52 +3,58 @@ layout: home-page
 title: Photography
 permalink: /photography/
 ---
-<div class="small-wrapper">
-  <div class="about-container">
-    <section class="about-header">
-      <div class="author-image-container">
-        <img src="{{site.baseurl}}/assets/img/{% if site.author-pic %}{{site.author-pic}}{% endif %}" alt="{{site.author}}">
-      </div>
-      <p class="subtitle">{{site.about-author}}</p>
-    </section>
-    <section class="about-body">
-      <ul class="contact-list">
-      {% if site.email %}
-        <li class="email"><a href="mailto:{{site.email}}"><i class="fa fa-envelope-o"></i></a></li>
-      {% endif %}
+<!DOCTYPE html>
+<html>
+<style>
+body, html {
+  height: 100%;
+  margin: 0;
+}
 
-      {% if site.phone %}
-        <li class="phone"><a href="tel:{{site.phone}}"><i class="fa fa-phone"></i></a></li>
-      {% endif %}
+.bgimg {
+  background-image: url('{{site.baseurl}}/assets/img/coming_soon.JPG');
+  height: 100%;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+  color: white;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 25px;
+}
 
-      {% if site.website %}
-        <li class="website"><a href="http://{{site.website}}" target="_blank"><i class="fa fa-globe"></i></a></li>
-      {% endif %}
+.topleft {
+  position: absolute;
+  top: 0;
+  left: 16px;
+}
 
-      {% if site.linkedin %}
-        <li class="linkedin"><a href="https://in.linkedin.com/in/{{site.linkedin}}" target="_blank"><i class="fa fa-linkedin"></i></a></li>
-      {% endif %}
+.bottomleft {
+  position: absolute;
+  bottom: 0;
+  left: 16px;
+}
 
-      {% if site.github %}
-        <li class="github"><a href="http://github.com/{{site.github}}" target="_blank"><i class="fa fa-github"></i></a></li>
-      {% endif %}
+.middle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
 
-      {% if site.twitter %}
-        <li class="twitter"><a href="https://twitter.com/{{site.twitter}}" target="_blank"><i class="fa fa-twitter"></i></a></li>
-      {% endif %}
+hr {
+  margin: auto;
+  width: 40%;
+}
+</style>
+<body>
 
-      {% if site.facebook %}
-        <li class="facebook"><a href="https://facebook.com/{{site.facebook}}" target="_blank"><i class="fa fa-facebook"></i></a></li>
-      {% endif %}
+<div class="bgimg">
+  <div class="middle">
+    <h1>COMING SOON</h1>
+  </div>
+</div>
 
-      {% if site.instagram %}
-        <li class="instagram"><a href="https://instagram.com/{{site.instagram}}" target="_blank"><i class="fa fa-instagram"></i></a></li>
-      {% endif %}
+</body>
+</html>
 
-      {% if site.pinterest %}
-        <li class="pinterest"><a href="https://pinterest.com/{{site.pinterest}}" target="_blank"><i class="fa fa-pinterest"></i></a></li>
-      {% endif %}
-      </ul>
-    </section> <!-- End About Body-->
-  </div> <!-- End About Container -->
-</div> <!-- End Small Wrapper -->
