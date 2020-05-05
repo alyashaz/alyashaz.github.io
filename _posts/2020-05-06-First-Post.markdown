@@ -13,8 +13,7 @@ I've worked in multiple industries varying from small, medium, and large corpora
 
 Let's go back to my university days. I went to school for Business Administration & Computer Science and was the only student to graduate in this double major (with internship) program, proof below.
 
-<img align="center" src="{{site.baseurl}}/assets/img/itinerary.JPG">
-#![Proof here]({{site.baseurl}}/assets/img/itinerary.JPG)
+<img style="margin-left: auto;margin-right: auto; display: block;" src="{{site.baseurl}}/assets/img/itinerary.JPG">
 
 I always knew I wanted to be a Software Developer growing up. I enjoyed coding and became very fascinated by computers at a very early age. In my under-graduate studies, I questioned my degree multiple times. After my first year, I was thinking about dropping business entirely and specializing in Software Engineering. That didn't last long after I looked at the classes I had to take to make the switch. Shortly after that, almost close to my 2nd year, I was debating in majoring in Accounting & Computer Science. I took two accounting classes in high school and really enjoyed the financials behind the work. After I spoke to a counselor, I realized that I couldn't become both. Course work would be very tough and I'd have almost no elective courses (courses that I could pick on my own, not that I had many electives in my double major anyways). In my 3rd year I started to intern at much bigger corporations and realized that I was good at what I was doing, so I kept on my path.
 
