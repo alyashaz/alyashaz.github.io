@@ -6,7 +6,7 @@ description: > # this means to ignore newlines until "baseurl:"
   Google search results) and in your feed.xml site description.
 permalink: ':title/'
 baseurl: "" # the subpath of the site, e.g. /blog
-url: "https://www.alyashaz.com" # the base hostname & protocol for the site, e.g. http://example.com
+url: "www.alyashaz.com" # the base hostname & protocol for the site, e.g. http://example.com
 
 # Author settings
 author: Zyad Alyashae # add your name
@@ -16,7 +16,7 @@ about-author: "Hey there! I am Zyad Alyashae, but you may refer to me as Zee. Iâ
 # Contact links
 #email: # Email address
 #phone: # Phone number
-website: alyashaz.github.io # Do not add http://
+website: www.alyashaz.com # Do not add http://
 linkedin: zyad-alyashae-b243b690 # Linkedin handle
 github: alyashaz # Github handle
 #twitter: # Twitter handle
