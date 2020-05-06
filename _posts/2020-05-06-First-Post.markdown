@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  First Post
-date:   2020-05-04 16:00:00 -0400
+date:   2020-05-05 16:00:00 -0400
 description: Woohoo!! We're live!
 img: live.jpg
 tags: [Blog, First Post]
@@ -26,6 +26,8 @@ I've worked as a main developer on multiple projects and as part of a team on ot
 I'm currently reading "Professional C# 7.0 and .NET Core 2.0" by Christian Nagel & also "The Clean Coder" by Robert C. Martin. I'm really enjoying the latter, although I don't agree with all the points, but it allows me to mentally argue with some points until I realize I'm probably wrong.
 C# 8.0 and .Net Core 3.0 have recently been announced, so I have to step up my book game. That's alright, one step at a time.
 
-Anyways, I've already rambled for far too long - this was not meant to be a cliche "first post", although it definitely turned out that way. You be the judge of that!
+There is more work to be done on this site, like adding disqus, and continue working on my <a href="{{site.baseurl}}/photography">photography page</a>
+
+Anyways, I've already rambled for far too long - this was not meant to be a cliche "first post", although it definitely turned out that way. You be the judge!
 
 > Stay tuned, the next post will be, you guessed it, about a design pattern.
