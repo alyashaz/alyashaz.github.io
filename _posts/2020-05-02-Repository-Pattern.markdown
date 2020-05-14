@@ -1,21 +1,155 @@
 ---
 layout: post
 title:  Repository Pattern
-date:   2020-05-03 13:32:20 +0300
-description: Describing Repository Pattern in C Sharp
+date:   2020-05-13 21:30:20 +0300
+description: Describing Repository Pattern in C#
 img: repository-pattern.png
 tags: [Blog, Repository Pattern]
 author: Zyad Alyashae
-published: false
+published: true
 ---
-Vaporware snackwave stumptown, small batch tattooed try-hard prism fanny pack 3 wolf moon edison bulb tofu hot chicken vice. Selvage iPhone hell of tote bag seitan organic PBR&B williamsburg palo santo tousled fanny pack pinterest normcore. Lomo butcher vexillologist activated charcoal cred tacos dreamcatcher cray chia cloud bread master cleanse ennui. Copper mug hella iceland occupy venmo. Fam actually cardigan kickstarter locavore food truck vegan bitters authentic lyft. Vaporware listicle keffiyeh adaptogen. Cloud bread stumptown swag la croix polaroid pickled. Next level yuccie four dollar toast polaroid. Portland chicharrones craft beer helvetica 3 wolf moon.
+Why is the repository pattern still being talked about in 2020? Surely there are better alternatives out there using ORMs like EF (Entity Framework) & Dapper. You have to think really hard to find answers and with most answers, you'd be walking on thin ice. In most situations, you'd be looking towards just using an ORM. There are times where both EF and a repository are utilized, although this is seen as an anti-pattern that causes more confusion than intended - why build an extra abstraction on top of EF that which already handles it? One of the only logical answers to using a repository is for testing purposes. By breaking the design into multiple repositories, you can further mock and unit test business logic without relying on integration tests. Anyways, the point of this article isn't to fuel a war between one or the other, but rather to show the use of the pattern and allow you to decide whether it's useful for the project at hand.
 
-Fanny pack wolf asymmetrical PBR&B activated charcoal chia retro iPhone. Everyday carry artisan live-edge bespoke ramps. Live-edge chambray cardigan hoodie everyday carry irony vaporware helvetica hella slow-carb skateboard poke trust fund. Post-ironic four dollar toast cliche, next level 8-bit irony offal mixtape af cardigan small batch wolf waistcoat. Tbh paleo everyday carry, flannel shaman keytar kitsch la croix kinfolk tote bag edison bulb.
+I'll be going through the below design diagram, from top to bottom, to create an inventory REST API in order to understand the use behind the repository pattern.
+It is highly recommended to utilize IoC through dependency injection while using repository pattern. I'll go through this step too!
 
-> Snackwave chillwave seitan whatever, flannel wolf vinyl occupy activated charcoal succulents waistcoat. Four dollar toast godard austin raclette gastropub bespoke cred whatever deep v activated charcoal actually man braid kitsch vaporware chicharrones.
+![Design Diagram]({{site.baseurl}}/assets/img/repository-pattern.jpg)
 
-Taxidermy shaman irony williamsburg bespoke. Freegan ugh mumblecore selfies, shabby chic neutra everyday carry. Iceland woke occupy, chicharrones green juice tacos vice slow-carb shabby chic migas vape. Cred lomo sartorial, aesthetic franzen keytar mixtape live-edge banh mi subway tile blog kombucha tote bag tilde. Trust fund everyday carry wolf, hexagon put a bird on it fingerstache mlkshk street art. Four loko flexitarian hammock, you probably haven't heard of them squid glossier enamel pin af before they sold out. Jianbing narwhal chartreuse helvetica 3 wolf moon quinoa. 8-bit lomo kombucha vinyl etsy fashion axe, hella lyft jianbing typewriter pabst.
+# Controller (presentation layer)
+This is the entry point to the API. Here is where all the routes lead to ;) (sorry, the dad joke was oozing to come out). I won't go into detail regarding this section as it does not really change whether you are using EF or the repository pattern.
 
-![Yosh Ginsu]({{site.baseurl}}/assets/img/yosh-ginsu.jpg)
+{% highlight csharp %}
+// Dependency Injection
+private IInventoryRepository inventoryRepository;
 
-8-bit disrupt food truck polaroid, viral you probably haven't heard of them chillwave next level letterpress williamsburg etsy tthammock intelligentsia. Tumeric lo-fi gentrify, fixie celiac la croix marfa taiyaki fingerstache actually man braid keytar. Brunch coloring book succulents church-key umami affogato. Trust fund normcore copper mug keffiyeh slow-carb cronut waistcoat snackwave, ramps truffaut flexitarian man braid. Celiac flexitarian authentic hashtag wayfarers. Next level pitchfork scenester godard. Salvia etsy edison bulb knausgaard poke jianbing actually. Mlkshk retro cardigan photo booth swag. Occupy shaman austin, meditation green juice flannel succulents twee. Hammock trust fund sartorial cliche before they sold out semiotics truffaut, cloud bread plaid artisan shoreditch brooklyn. Shoreditch air plant asymmetrical DIY. Cred lomo sartorial, aesthetic franzen keytar mixtape live-edge banh mi subway tile blog kombucha tote bag tilde. Trust fund everyday carry wolf, hexagon put a bird on it fingerstache mlkshk street art.
+public ItemController(IInventoryRepository inventoryRepository)
+{
+    this.inventoryRepository = inventoryRepository;
+}
+
+[HttpPost]
+[Route("AddItem", Name = "AddItem")]
+public HttpResponseMessage AddItem(Item item)
+{
+    if (item == null)
+    {
+        return new HttpResponseMessage(HttpStatusCode.BadRequest);
+    }
+
+    ItemDTO itemDTO = itemRepository.AddItem(item.ToCommand());
+
+    if (itemDTO == null)
+    {
+        return new HttpResponseMessage(HttpStatusCode.BadRequest);
+    }
+    else
+    {
+        return Request.CreateResponse(HttpStatusCode.OK, itemDTO);
+    }
+}
+{% endhighlight %}
+
+> Using AutoMapper, found in NuGet, we can map the ItemDTO to the Item Model. This allows for breakage between the business and application logic.
+
+As you can see, I've kept the controller fairly easy to use and understand. It simply fails fast if needed before calling further layers, utilizes the service layer to prepare the model then calls the repository layer for application level work
+
+# Service Layer
+
+This layer is meant to be very simple, in our case it will merely translate business logic to application models. I used AutoMapper, which you can install from NuGet, to doing the mapping. I have two models, **Item** which holds business layered logic & **ItemDTO** which we use in the application layer.
+The reasoning for two models is because we may use fields in the DTO for data processing that should not be upstreamed to the presentation domain.
+
+{% highlight csharp %}
+public class Item
+{
+    // Calling this function will map the matching properties between Item & ItemDTO 
+    public ItemDTO ToCommand()
+    {
+        return Mapper.Map<ItemDTO>(this);
+    }
+
+    [JsonProperty]
+    public string Name { get; set; }
+    [JsonProperty]
+    public string Count { get; set; }
+    [JsonProperty]
+    public Boolean Category { get; set; }
+}
+{% endhighlight %}
+
+Below is our application layer model. You may notice that I have three extra properties below (ItemId, Location, LastChecked). The extra properties will not be exposed to the presentation layer and may be used for various reasons (sorting, querying, filtering...etc). C# makes creating models very easy with inline encapsulation.
+
+{% highlight csharp %}
+public class ItemDTO
+{
+    public long ItemId { get; set; }
+    public long Name { get; set; }
+    public string Count { get; set; }
+    public bool Category { get; set; }
+    public string Location { get; set; }
+    public DateTime? LastChecked { get; set; }
+}
+{% endhighlight %}
+
+# Repository Layer
+
+It's important to keep in mind that the repository layer is meant to only utilize basic CRUD calls. The repository is only meant to extend your data access layer. Keeping it simple is the trick. First, create an interface - we can call this IInventoryRepository. For simplicity sake, we can create one function within the interface that adds an item. Below is the implementation of the interface.
+
+{% highlight csharp %}
+public class InventoryRepository : IInventoryRepository
+{
+    // Dependency Injection
+    private IItemDataProvider itemDataProvider;
+
+    public InventoryRepository(IItemDataProvider itemDataProvider)
+    {
+        this.itemDataProvider = itemDataProvider;
+    }
+
+    public ItemDTO GetItem(long itemId)
+    {
+        return itemDataProvider.GetItem(itemId);
+    }
+}
+{% endhighlight %}
+
+On another note, one can create a generic repository to avoid adding dozens of functions. Also, if multiple operations are called from a single function then it would be ideal to utilize the **Unit of Work** approach. The Unit of Work approach dictates that the operations be run through a transaction, so if one fails, the others do not run.
+
+# Data Access Layer
+
+This layer is meant to communicate with the database, be it through stored procedures, LINQ to SQL or SQL queries. This layer is usually only access by the repository layer. The same interface rules from the repository apply here.
+
+{% highlight csharp %}
+public class InventoryDataProvider : IInventoryDataProvider
+{
+    public long AddItem(ItemDTO itemDTO)
+    {
+        try
+        {
+            // Access SQL database and add data
+            // return newly added itemId
+        }
+        catch (SqlException e)
+        {
+
+        }
+    }
+}
+{% endhighlight %}
+
+In the case above, I am only returning a number, but for a **GET** REST request you may grab the data returned from SQL and build ItemDTO and return that instead.
+
+# Dependency Injection (DI)
+
+You may have caught on already, in the ItemController & InventoryRepository, I injected the IInventoryRepository & IInventoryDataProvider through the constructors. Using the **Unity Framework**, I've setup my UnityConfig.cs to map IInventoryRepository to InventoryRepository & IInventoryDataProvider to InventoryDataProvider. Using DI, we can eliminate the use of the keyword **new** everytime we need to access the repository or data provider, which conforms with the SOLID principles as well. Below is the snippet from the UnitConfig class located in the App_Start folder.
+
+{% highlight csharp %}
+public static void RegisterTypes(IUnityContainer container)
+{
+    container.RegisterType<IInventoryRepository, InventoryRepository>();
+    container.RegisterType<IInventoryDataProvider, InventoryDataProvider>();
+}
+{% endhighlight %}
+
+# Conclusion
+
+Following this pattern allows for thorough unit test creation as well as increased code coverage since you can test each layer fairly effectively. C# is designed very well (for most things) to allow you to create a project utilizing this pattern in a matter of hours. 
