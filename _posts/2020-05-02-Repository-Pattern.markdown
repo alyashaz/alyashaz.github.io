@@ -6,14 +6,14 @@ description: Describing Repository Pattern in C#
 img: repository-pattern.png
 tags: [Blog, Repository Pattern]
 author: Zyad Alyashae
-published: true
+published: false
 ---
 Why is the repository pattern still being talked about in 2020? Surely there are better alternatives out there using ORMs like EF (Entity Framework) & Dapper. You have to think really hard to find answers and with most answers, you'd be walking on thin ice. In most situations, you'd be looking towards just using an ORM. There are times where both EF and a repository are utilized, although this is seen as an anti-pattern that causes more confusion than intended - why build an extra abstraction on top of EF that which already handles it? One of the only logical answers to using a repository is for testing purposes. By breaking the design into multiple repositories, you can further mock and unit test business logic without relying on integration tests. Anyways, the point of this article isn't to fuel a war between one or the other, but rather to show the use of the pattern and allow you to decide whether it's useful for the project at hand.
 
 I'll be going through the below design diagram, from top to bottom, to create an inventory REST API in order to understand the use behind the repository pattern.
 It is highly recommended to utilize IoC through dependency injection while using repository pattern. I'll go through this step too!
 
-![Design Diagram]({{site.baseurl}}/assets/img/repository-pattern.jpg)
+![Design Diagram]({{site.baseurl}}/assets/img/repository-pattern.png)
 
 # Controller (presentation layer)
 This is the entry point to the API. Here is where all the routes lead to ;) (sorry, the dad joke was oozing to come out). I won't go into detail regarding this section as it does not really change whether you are using EF or the repository pattern.
@@ -136,7 +136,7 @@ public class InventoryDataProvider : IInventoryDataProvider
 }
 {% endhighlight %}
 
-In the case above, I am only returning a number, but for a **GET** REST request you may grab the data returned from SQL and build ItemDTO and return that instead.
+In the case above, I am only returning a number, but for a **GET REST** request you may grab the data returned from SQL and build ItemDTO and return that instead.
 
 # Dependency Injection (DI)
 
