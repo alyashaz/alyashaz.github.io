@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  Repository Pattern
-date:   2020-05-14 21:30:20 +0300
+date:   2020-05-14 21:30:20 -0400
 description: Describing Repository Pattern in C#
 img: repository-pattern.png
 tags: [Blog, Repository Pattern]
@@ -125,15 +125,8 @@ public class InventoryDataProvider : IInventoryDataProvider
 {
     public long AddItem(ItemDTO itemDTO)
     {
-        try
-        {
-            // Access SQL database and add data
-            // return newly added itemId
-        }
-        catch (SqlException e)
-        {
-
-        }
+        // Access SQL database and add data
+        // return newly added itemId
     }
 }
 {% endhighlight %}
