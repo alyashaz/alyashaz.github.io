@@ -3,7 +3,7 @@ layout: post
 title:  Repository Pattern
 date:   2020-05-14 21:30:20 -0400
 description: Describing Repository Pattern in C#
-img: repository-pattern.png
+img: repository-post.jpg
 tags: [Blog, Repository Pattern]
 author: Zyad Alyashae
 published: true
