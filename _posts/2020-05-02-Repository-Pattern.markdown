@@ -1,12 +1,12 @@
 ---
 layout: post
 title:  Repository Pattern
-date:   2020-05-13 21:30:20 +0300
+date:   2020-05-14 21:30:20 +0300
 description: Describing Repository Pattern in C#
 img: repository-pattern.png
 tags: [Blog, Repository Pattern]
 author: Zyad Alyashae
-published: false
+published: true
 ---
 Why is the repository pattern still being talked about in 2020? Surely there are better alternatives out there using ORMs like EF (Entity Framework) & Dapper. You have to think really hard to find answers and with most answers, you'd be walking on thin ice. In most situations, you'd be looking towards just using an ORM. There are times where both EF and a repository are utilized, although this is seen as an anti-pattern that causes more confusion than intended - why build an extra abstraction on top of EF that which already handles it? One of the only logical answers to using a repository is for testing purposes. By breaking the design into multiple repositories, you can further mock and unit test business logic without relying on integration tests. Anyways, the point of this article isn't to fuel a war between one or the other, but rather to show the use of the pattern and allow you to decide whether it's useful for the project at hand.
 
@@ -28,7 +28,7 @@ public ItemController(IInventoryRepository inventoryRepository)
 }
 
 [HttpPost]
-[Route("AddItem", Name = "AddItem")]
+[Route("")]
 public HttpResponseMessage AddItem(Item item)
 {
     if (item == null)
@@ -51,12 +51,12 @@ public HttpResponseMessage AddItem(Item item)
 
 > Using AutoMapper, found in NuGet, we can map the ItemDTO to the Item Model. This allows for breakage between the business and application logic.
 
-As you can see, I've kept the controller fairly easy to use and understand. It simply fails fast if needed before calling further layers, utilizes the service layer to prepare the model then calls the repository layer for application level work
+As you can see, I've kept the controller fairly easy to use and understand. It simply fails fast if needed before calling further layers, utilizes the service layer to prepare the model then calls the repository layer for application level work.
 
 # Service Layer
 
-This layer is meant to be very simple, in our case it will merely translate business logic to application models. I used AutoMapper, which you can install from NuGet, to doing the mapping. I have two models, **Item** which holds business layered logic & **ItemDTO** which we use in the application layer.
-The reasoning for two models is because we may use fields in the DTO for data processing that should not be upstreamed to the presentation domain.
+This layer is meant to be very simple, in our case it will merely translate business logic to application models. I used AutoMapper, which you can install from NuGet, to do the mapping. I have two models, **Item** which holds business layered logic & **ItemDTO** which we use in the application layer.
+Another reason is because we may use properties in the DTO for data processing that should not be upstreamed to the presentation domain and vice-versa.
 
 {% highlight csharp %}
 public class Item
@@ -76,7 +76,7 @@ public class Item
 }
 {% endhighlight %}
 
-Below is our application layer model. You may notice that I have three extra properties below (ItemId, Location, LastChecked). The extra properties will not be exposed to the presentation layer and may be used for various reasons (sorting, querying, filtering...etc). C# makes creating models very easy with inline encapsulation.
+Below is our application layer model. You may notice that I have three extra properties (ItemId, Location, LastChecked). The main reason is so the extra properties will not be exposed to the presentation layer during a request. We only want to show users the ItemId, Location, and LastChecked properties on a response. On that note, the extra properties may be used for other various reasons such as sorting, querying, filtering...etc.
 
 {% highlight csharp %}
 public class ItemDTO
@@ -89,6 +89,8 @@ public class ItemDTO
     public DateTime? LastChecked { get; set; }
 }
 {% endhighlight %}
+
+> C# makes creating models very easy with inline encapsulation.
 
 # Repository Layer
 
@@ -152,4 +154,4 @@ public static void RegisterTypes(IUnityContainer container)
 
 # Conclusion
 
-Following this pattern allows for thorough unit test creation as well as increased code coverage since you can test each layer fairly effectively. C# is designed very well (for most things) to allow you to create a project utilizing this pattern in a matter of hours. 
+Following this pattern allows for thorough unit tests as well as increased code coverage since you can test each layer fairly effectively. C# is designed very well (for most things) to allow you to create a Web Api utilizing this pattern in a matter of hours. 
