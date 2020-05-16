@@ -19,9 +19,9 @@ It is highly recommended to utilize IoC through dependency injection while using
 This is the entry point to the API. Here is where all the routes lead to ;) (sorry, the dad joke was oozing to come out). I won't go into detail regarding this section as it does not really change whether you are using EF or the repository pattern.
 
 {% highlight csharp %}
-// Dependency Injection
 private IInventoryRepository inventoryRepository;
 
+// Dependency Injection
 public ItemController(IInventoryRepository inventoryRepository)
 {
     this.inventoryRepository = inventoryRepository;
@@ -55,8 +55,7 @@ As you can see, I've kept the controller fairly easy to use and understand. It s
 
 # Service Layer
 
-This layer is meant to be very simple, in our case it will merely translate business logic to application models. I used AutoMapper, which you can install from NuGet, to do the mapping. I have two models, **Item** which holds business layered logic & **ItemDTO** which we use in the application layer.
-Another reason is because we may use properties in the DTO for data processing that should not be upstreamed to the presentation domain and vice-versa.
+This layer is meant to be very simple, in our case it will merely translate business logic to application models. I used AutoMapper, which you can install from NuGet, to do the mapping. I have two models, **Item** which holds business logic & **ItemDTO** which we use in the application layer.
 
 {% highlight csharp %}
 public class Item
@@ -76,7 +75,7 @@ public class Item
 }
 {% endhighlight %}
 
-Below is our application layer model. You may notice that I have three extra properties (ItemId, Location, LastChecked). The main reason is so the extra properties will not be exposed to the presentation layer during a request. We only want to show users the ItemId, Location, and LastChecked properties on a response. On that note, the extra properties may be used for other various reasons such as sorting, querying, filtering...etc.
+Below is our application layer model. You may notice that I have three extra properties (ItemId, Location, LastChecked). The main reason is to not expose the extra properties into the presentation layer during a request. We only want to append the ItemId, Location, and LastChecked properties on a response. On that note, the extra properties may be used for other various reasons such as sorting, querying, filtering...etc.
 
 {% highlight csharp %}
 public class ItemDTO
@@ -99,9 +98,9 @@ It's important to keep in mind that the repository layer is meant to only utiliz
 {% highlight csharp %}
 public class InventoryRepository : IInventoryRepository
 {
-    // Dependency Injection
     private IItemDataProvider itemDataProvider;
 
+    // Dependency Injection
     public InventoryRepository(IItemDataProvider itemDataProvider)
     {
         this.itemDataProvider = itemDataProvider;
@@ -131,11 +130,11 @@ public class InventoryDataProvider : IInventoryDataProvider
 }
 {% endhighlight %}
 
-In the case above, I am only returning a number, but for a **GET REST** request you may grab the data returned from SQL and build ItemDTO and return that instead.
+In the case above, I am only returning a number, but for a **GET HTTP request** you may grab the data returned from SQL and build ItemDTO and return that instead.
 
 # Dependency Injection (DI)
 
-You may have caught on already, in the ItemController & InventoryRepository, I injected the IInventoryRepository & IInventoryDataProvider through the constructors. Using the **Unity Framework**, I've setup my UnityConfig.cs to map IInventoryRepository to InventoryRepository & IInventoryDataProvider to InventoryDataProvider. Using DI, we can eliminate the use of the keyword **new** everytime we need to access the repository or data provider, which conforms with the SOLID principles as well. Below is the snippet from the UnitConfig class located in the App_Start folder.
+You may have caught on already, in the ItemController & InventoryRepository, I injected the IInventoryRepository & IInventoryDataProvider through the constructors. Using the **Unity Framework**, I've setup my UnityConfig.cs to map IInventoryRepository to InventoryRepository & IInventoryDataProvider to InventoryDataProvider. Using DI, we can eliminate the use of the keyword **new** every time we need to access the repository or data provider, which conforms with the SOLID principles as well. Below is the snippet from UnitConfig.cs located in the App_Start folder.
 
 {% highlight csharp %}
 public static void RegisterTypes(IUnityContainer container)
