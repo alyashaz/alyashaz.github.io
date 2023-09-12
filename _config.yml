@@ -31,7 +31,8 @@ github: alyashaz # Github handle
 #discus_identifier: # discus identifier
 
 # Google Analytics Tracker
-analytics: UA-165344084-1
+#analytics: UA-165344084-1
+analytics: G-11BFSL6ZG2
 
 # Paginate
 paginate: 6
